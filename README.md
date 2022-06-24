@@ -1,3 +1,49 @@
+## 📚 Steps to use this customized strapi project
+- Clone this project
+```
+git clone https://github.com/KamleshBobde1/entando-customized-strapi.git
+```
+- Install the dependencies
+```
+~entando-customized-strapi$ npm install
+```
+- Go to src/admin and install the dependencies
+```
+~entando-customized-strapi/src/admin$ npm install
+```
+- Go to node_modules/@strapi/strapi/lib/core/loaders/admin.js and this line: node_modules/@strapi/strapi/lib/core/loaders/admin.js
+```
+ // strapi.admin = require('@strapi/admin/strapi-server'); //Comment this line
+  strapi.admin = require('../../../../../../src/admin/strapi-server'); //Add this line
+```
+- Run the project
+```
+~entando-customized-strapi$ npm run develop
+```
+## 📚 Steps I followed to customize strapi project:
+- Create a strapi project:
+```
+npx create-strapi-app@4.1.11 entando-customized-strapi
+```
+- Build the project
+```
+npm run build
+```
+- Delete existing src/admin folder. Copy the node_modules/@strapi/admin folder and paste in src/
+- Put the custom code and the specific files.
+- Install dependecies in admin module
+```
+src/admin$ npm install
+```
+- Go to node_modules/@strapi/strapi/lib/core/loaders/admin.js and this line: node_modules/@strapi/strapi/lib/core/loaders/admin.js
+```
+ // strapi.admin = require('@strapi/admin/strapi-server'); //Comment this line
+  strapi.admin = require('../../../../../../src/admin/strapi-server'); //Add this line
+```
+- Run the project
+```
+~entando-customized-strapi$ npm run develop
+```
 # 🚀 Getting started with Strapi
 
 Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/developer-docs/latest/developer-resources/cli/CLI.html) (CLI) which lets you scaffold and manage your project in seconds.
