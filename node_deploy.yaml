@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: custom-node
+  labels:
+    app: custom-node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: custom-node
+  template:
+    metadata:
+      labels:
+        app: custom-node
+    spec:
+      containers:
+      - name: custom-node
+        image: akhileshprajapatinv/strapi:v30.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 1337
+      imagePullSecrets:
+        - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: custom-node-service
+spec:
+  selector:
+    app: custom-node
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 1337
+      targetPort: 1337
+      nodePort: 30029

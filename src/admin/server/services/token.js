@@ -59,11 +59,11 @@ const decodeJwtToken = token => {
  * @param {*} token 
  * @returns 
  */
-const decodeJwtKCToken_ = token => {
-  const kcConfigObj = { realm: 'entando', authServerUrl: 'http://20.79.198.96.nip.io' };
-  const keycloak = Keycloak(kcConfigObj);
-  return keycloak.verifyOnline(token);
-};
+// const decodeJwtKCToken_ = token => {
+//   const kcConfigObj = { realm: 'entando', authServerUrl: 'http://20.79.198.96.nip.io' };
+//   const keycloak = Keycloak(kcConfigObj);
+//   return keycloak.verifyOnline(token);
+// };
 
 // Decode token and verify it
 const decodeJwtKCToken = token => {
@@ -96,7 +96,6 @@ const decodeJwtKCToken = token => {
 
 const findNthOccur = (str, ch, N) => {
   var occur = 0;
-
   // Loop to find the Nth occurrence of the character
   for (var i = 0; i < str.length; i++) {
     if (str[i] == ch) {
