@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:latest
+        ports:
+        - containerPort: 80        
+        env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: admin
+        - name: POSTGRES_DB
+          value: str1803      
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+spec:
+  selector:
+    app: postgres
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432              
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: custom-node
+  labels:
+    app: custom-node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: custom-node
+  template:
+    metadata:
+      labels:
+        app: custom-node
+    spec:
+      containers:
+      - name: custom-node
+        image: akhileshprajapatinv/strapi:v30.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 1337
+      imagePullSecrets:
+        - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: custom-node-service
+spec:
+  selector:
+    app: custom-node
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 1337
+      targetPort: 1337
+      nodePort: 30029
