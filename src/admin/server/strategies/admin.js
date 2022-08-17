@@ -4,7 +4,7 @@ const { getService } = require('../utils');
 
 /** @type {import('.').AuthenticateFunction} */
 const authenticate = async ctx => {
-  console.log('src/admin/server/strategies/admin.js......authenticate strapi4111');
+  console.log('src/admin/server/strategies/admin.js......authenticate strapi');
   const { authorization } = ctx.request.header;
 
   if (!authorization) {
@@ -39,10 +39,8 @@ const authenticate = async ctx => {
     queryObj = { id: payload && payload.payload && payload.payload.id };
   } else {
     await getService('token').decodeJwtKCToken(token).then((res) => {
-      console.log('response: ', res);
       payload = { id: res.id, userName: res.userName, isValid: true };
       queryObj = { username: payload.userName };
-      console.log('Verified kc token obj: ', payload);
     }).catch((err) => {
       console.log('Error in decode kc token(Admin request) : ', err);
       payload = { id: null, username: null, isValid: false };
@@ -57,7 +55,6 @@ const authenticate = async ctx => {
     .query('admin::user')
     .findOne({ where: queryObj, populate: ['roles'] });
 
-    console.log('strapi db user: ', user);
 //-----------------------------------------
 
   if (!user || !(user.isActive === true)) {
